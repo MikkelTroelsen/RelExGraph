@@ -1,0 +1,6 @@
+# python service ignores
+
+__pychache__/
+
+# pyhton venv
+RelikService/relik-env
