@@ -4,13 +4,14 @@ from flask import Flask, request, jsonify
 
 app = Flask(__name__)
 
-relik = Relik.from_pretrained(
-    "relik-ie/relik-relation-extraction-small",
-)
+
 
 @app.route('/get-relations', methods=['POST'])
 def get_relations():
     try:
+        relik = Relik.from_pretrained(
+            "relik-ie/relik-relation-extraction-small",
+        )
         data = request.get_json()
         print(data)
         text = data.get('text') if data else None
