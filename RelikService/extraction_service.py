@@ -5,14 +5,16 @@ from flask import Flask, request, jsonify
 app = Flask(__name__)
 
 relik = Relik.from_pretrained(
-        "relik-ie/relik-relation-extraction-small",
-    )
+    "relik-ie/relik-relation-extraction-small",
+)
 
-@app.route('get-relations', metholds=['GET'])
+@app.route('/get-relations', methods=['POST'])
 def get_relations():
     try:
-        extraction_text = request.args.get('text', type=str)
-        out: RelikOutput = relik(extraction_text)
+        data = request.get_json()
+        print(data)
+        text = data.get('text') if data else None
+        out: RelikOutput = relik(text)
         triples = extract_triples(out.triplets)
         return jsonify(triples)
     except:
