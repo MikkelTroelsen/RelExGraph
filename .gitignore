@@ -1,8 +1,8 @@
 # python service ignores
-
 __pychache__/
 
 # pyhton venv
 RelikService/venv
 
+# vs code folder
 web/.vscode
