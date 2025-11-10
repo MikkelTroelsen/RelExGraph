@@ -1,8 +1,21 @@
-# python service ignores
-__pychache__/
+# Python service ignores
+__pycache__/
+*.py[cod]
+*$py.class
 
-# pyhton venv
+# Python venv
 RelikService/venv
+venv/
+env/
 
-# vs code folder
+# VS Code folder
+.vscode/
 web/.vscode
+
+# Docker
+*.log
+.env
+
+# OS
+.DS_Store
+Thumbs.db

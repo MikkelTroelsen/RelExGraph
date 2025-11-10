@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"fmt"
+	"os"
 
 	"github.com/neo4j/neo4j-go-driver/v5/neo4j"
 )
@@ -13,8 +14,15 @@ type Neo4jClient struct {
 
 func GetNeo4jClient() (*Neo4jClient, error) {
 	ctx := context.Background()
+
+	// Get Neo4j URI from environment variable, default to localhost
+	neo4jURI := os.Getenv("NEO4J_URI")
+	if neo4jURI == "" {
+		neo4jURI = "bolt://localhost:7687"
+	}
+
 	driver, err := neo4j.NewDriverWithContext(
-		"bolt://localhost:7687",
+		neo4jURI,
 		neo4j.NoAuth())
 
 	if err != nil {

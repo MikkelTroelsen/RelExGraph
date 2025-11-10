@@ -1,0 +1,69 @@
+version: '3.8'
+
+services:
+  neo4j:
+    image: neo4j:latest
+    container_name: relexgraph-neo4j
+    ports:
+      - "7474:7474"  # HTTP
+      - "7687:7687"  # Bolt
+    environment:
+      - NEO4J_AUTH=none  # No authentication (change for production)
+      # - NEO4J_AUTH=neo4j/your-password  # Uncomment and set password for production
+    volumes:
+      - neo4j_data:/data
+      - neo4j_logs:/logs
+    networks:
+      - relexgraph-network
+    healthcheck:
+      test: ["CMD-SHELL", "wget --no-verbose --tries=1 --spider localhost:7474 || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  relik:
+    build:
+      context: ./RelikService
+      dockerfile: Dockerfile
+    container_name: relexgraph-relik
+    ports:
+      - "5000:5000"
+    environment:
+      - FLASK_APP=extraction_service.py
+      - FLASK_RUN_HOST=0.0.0.0
+      - FLASK_ENV=production
+    networks:
+      - relexgraph-network
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:5000/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+  web:
+    build:
+      context: ./web
+      dockerfile: Dockerfile
+    container_name: relexgraph-web
+    ports:
+      - "8080:8080"
+    environment:
+      - NEO4J_URI=bolt://neo4j:7687
+      - RELIK_URL=http://relik:5000
+      - GIN_MODE=release
+    depends_on:
+      neo4j:
+        condition: service_healthy
+      relik:
+        condition: service_started
+    networks:
+      - relexgraph-network
+
+networks:
+  relexgraph-network:
+    driver: bridge
+
+volumes:
+  neo4j_data:
+  neo4j_logs:

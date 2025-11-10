@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"io"
 	"net/http"
+	"os"
 )
 
 type Relation struct {
@@ -22,8 +23,14 @@ func callRelik(text string) []Relation {
 		panic(err)
 	}
 
+	// Get Relik URL from environment variable, default to localhost
+	relikURL := os.Getenv("RELIK_URL")
+	if relikURL == "" {
+		relikURL = "http://127.0.0.1:5000"
+	}
+
 	resp, err := http.Post(
-		"http://127.0.0.1:5000/get-relations",
+		relikURL+"/get-relations",
 		"application/json",
 		bytes.NewBuffer(jsonData),
 	)
