@@ -40,7 +40,7 @@ func main() {
 		}
 		client.ExecuteQuery(c, CreateQuery(result))
 		c.HTML(http.StatusOK, "results.html", gin.H{
-			"context":   context,
+			"context":   result,
 			"graphData": CreateQuery(result), // the response from your API
 		})
 	})

@@ -10,8 +10,14 @@
     <div class="container">
         <h1>RelExGraph</h1>
         <p class="description">
-            Enter your text context below to analyze relationships and extract meaningful insights.
-            You can provide multiple paragraphs for comprehensive analysis.
+            This tool uses the <strong>ReLiK model</strong> to automatically extract relations from your text and visualize them as a knowledge graph in Neo4j.
+        </p>
+        <p class="description">
+            Enter your text below to identify subjects, objects, and the relationships between them.
+            The model will analyze the content and create a graph database representation.
+        </p>
+        <p class="description" style="color: #666; font-size: 0.9em;">
+             <em>Please note: Processing may take a moment depending on text length. Wait for the results page to load after clicking "Analyze".</em>
         </p>
 
         <form action="/generate-graph" method="POST">
