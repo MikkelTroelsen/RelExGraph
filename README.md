@@ -156,9 +156,6 @@ RelExGraph/
 - **Processing Time**: The ReLiK neural model may take several seconds to process text, especially on first run
 - **Memory Usage**: The ReLiK service requires significant memory for the neural model
 - **Production Use**: Change Neo4j authentication settings for production deployments
-- **Processing Time**: The ReLiK neural model may take several seconds to process text, especially on first run
-- **Memory Usage**: The ReLiK service requires significant memory for the neural model
-- **Production Use**: Change Neo4j authentication settings for production deployments
 - **Model Performance**: Relation extraction quality depends on text clarity and structure. The small model produces some noise alongside correct extractions
 - **Model Type**: ReLiK is a specialized neural information extraction model, not a general-purpose LLM
 - **GraphRAG Foundation**: This project builds the extraction and storage components of a GraphRAG pipeline, without the final LLM querying step
